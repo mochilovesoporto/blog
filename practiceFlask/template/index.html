@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block head %}
+
+{% endblock %}
+
+{% block body %}
+
+  <form> action="/" method = "POST">
+    <p>Name <input type = "text" name = "Name" /></p>
+    <p>Physics <input type = "text" name="Phyics"</p>
+    <p>Chemistry <input type = "text" name="Chemistry"</p>
+    <p>Maths <input type = "text" name="Maths"</p>
+    <p><input type="submit" value = "submit" </p>
+  </form>
+
+  <table>
+    {% for result in results %}
+      <tr>
+        <th>Name </th>
+        <th>Physics</th>
+        <th>Chemistry</th>
+        <th>Maths</th>
+
+      </tr>
+      <tr>
+        <td> {{ result.Name }} </td>
+        <td> {{ result.Physics }} </td>
+        <td> {{ result.Chemistry }} </td>
+        <td> {{ result.Maths }} </td>
+      </tr>
+    {% endfor %}
+    </table>
+
+{% endblock %}

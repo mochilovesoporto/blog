@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}New Comment{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  <form method="post">
+    <label for="body">Comment</label>
+    <textarea name="body" id="body">{{ request.form['body'] }}</textarea>
+    <input type="submit" value="Save">
+  </form>
+
+  <form action="{{ url_for('blog.comment'), id=post['id']) }}" method="button">
+    <input type="submit" value="Cancel">
+  </form>
+
+{% endblock %}
