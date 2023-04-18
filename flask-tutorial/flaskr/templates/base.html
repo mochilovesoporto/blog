@@ -5,9 +5,14 @@
     <title>{% block title %}{% endblock %} - t</title>
     <link rel="stylesheet" href="{{ url_for('static',filename='style.css') }}">
 <nav>
-  <h1>t</h1>
+  <h1><a href="{{ url_for('blog.index') }}">t</a></h1>
   <ul>
     {% if g.user %}
+      <li><form action="{{ url_for('blog.search') }}" method='post'>
+            <input type="text" name="search_content" onkeydown="if(event.keycode == 12) { this.form.submit(); return false; }" placeholder="Search Tumblr">
+            <button type="button" onclick="window.location.href = '{{ url_for('blog.index') }}';">x</button>
+          </form>
+      </li>
       <li><span>{{ g.user['username'] }}</span>
       <li><a href="{{ url_for('auth.logout') }}">Log Out</a>
     {% else %}

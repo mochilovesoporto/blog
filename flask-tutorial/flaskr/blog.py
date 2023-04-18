@@ -1,4 +1,4 @@
-from flask import (Blueprint, flash, g, redirect, render_template, request, url_for)
+from flask import (Blueprint, flash, g, redirect, render_template, request, url_for, session)
 from werkzeug.exceptions import abort
 
 from flaskr.auth import login_required
@@ -9,9 +9,9 @@ bp = Blueprint('blog',__name__)
 @bp.route('/')
 def index():
     db = get_db()
-    posts = db.execute('SELECT p.id, title, body, created, author_id, username'
-        ' FROM post p JOIN user u ON p.author_id = u.id'
-        ' ORDER BY created DESC'
+    posts = db.execute('SELECT p.id, title, post_body, post_created, post_author_id, username'
+        ' FROM post p JOIN user u ON p.post_author_id = u.id'
+        ' ORDER BY post_created DESC'
     ).fetchall()
     return render_template('blog/index.html', posts=posts)
 
@@ -20,7 +20,7 @@ def index():
 def create():
     if request.method == 'POST':
         title = request.form['title']
-        body = request.form['body']
+        body = request.form['post_body']
         error = None
 
         if not title:
@@ -31,7 +31,7 @@ def create():
         else:
             db = get_db()
             db.execute(
-                'INSERT INTO post (title, body, author_id)'
+                'INSERT INTO post (title, post_body, post_author_id)'
                 ' VALUES (?, ?, ?)',
                 (title, body, g.user['id'])
             )
@@ -41,8 +41,8 @@ def create():
 
 def get_post(id, check_author=True):
     post = get_db().execute(
-        'SELECT p.id, title, p.body, p.created, p.author_id, username'
-        ' FROM post p JOIN user u ON p.author_id = u.id'
+        'SELECT p.id, title, post_body, post_created, post_author_id, username'
+        ' FROM post p JOIN user u ON p.post_author_id = u.id'
         ' WHERE p.id = ?',
         (id,)
     ).fetchone()
@@ -50,10 +50,26 @@ def get_post(id, check_author=True):
     if post is None:
         abort(404, f"Post id {id} doesn't exist.")
 
-    if check_author and post['author_id'] != g.user['id']:
+    if check_author and post['post_author_id'] != g.user['id']:
         abort(403)
 
     return post
+
+def get_comment(id, check_author=True):
+    comment = get_db().execute(
+        'SELECT c.id, comment_body, comment_created, comment_author_id, post_id, username'
+        ' FROM comment c JOIN user u ON c.comment_author_id = u.id'
+        ' WHERE c.id = ?',
+        (id,)
+    ).fetchone()
+
+    if comment is None:
+        abort(404, f"Comment id {id} doesn't exist.")
+
+    if check_author and comment['comment_author_id'] != g.user['id']:
+        abort(403)
+
+    return comment
 
 @bp.route('/<int:id>/update', methods=('GET', 'POST'))
 @login_required
@@ -62,7 +78,7 @@ def update(id):
 
     if request.method == 'POST':
         title = request.form['title']
-        body = request.form['body']
+        body = request.form['post_body']
         error = None
 
         if not title:
@@ -73,7 +89,7 @@ def update(id):
         else:
             db = get_db()
             db.execute(
-                'UPDATE post SET title = ?, body = ?'
+                'UPDATE post SET title = ?, post_body = ?'
                 ' WHERE id = ?',
                 (title, body, id)
             )
@@ -93,23 +109,22 @@ def delete(id):
 
 @bp.route('/<int:id>/comment')
 def comment(id):
-    post = get_post(id)
     db = get_db()
-    comments = db.execute('SELECT c.id, c.body, c.created, c.author_id, post_id, username'
-        ' FROM comment c JOIN user u ON c.author_id = u.id'
-        ' WHERE c.post_id = ?'
-        ' ORDER BY created DESC',
+    comments = db.execute('SELECT c.id, comment_body, comment_created, comment_author_id, post_id, username'
+        ' FROM comment c JOIN user u ON c.comment_author_id = u.id'
+        ' WHERE post_id = ?'
+        ' ORDER BY comment_created DESC',
         (id,)
     ).fetchall()
-    return render_template('blog/comment.html', comments=comments, post=post)
+    return render_template('blog/comment.html', comments=comments, post=id)
 
-@bp.route('/addcomment', methods=('POST', 'GET'))
+@bp.route('/<int:id>/addcomment', methods=('POST', 'GET'))
 @login_required
-def create_comment(id):
-    get_post(id)
+def addcomment(id):
+    user_id = session.get('user_id')
 
     if request.method == 'POST':
-        comment = request.method['comment']
+        body = request.form['comment_body']
         error = None
 
         if not comment:
@@ -121,12 +136,69 @@ def create_comment(id):
         else:
             db = get_db()
             db.execute(
-                'INSERT INTO comment (body, author_id, post_id)'
+                'INSERT INTO comment (comment_body, comment_author_id, post_id)'
                 ' VALUES (?, ?, ?)',
-                (body, g.user['id'], id)
+                (body, user_id, id)
             )
             db.commit()
-            return redirect(url_for('blog.comment'))
-    return render_template('blog/addcomment.html')
+            return redirect(url_for('blog.comment', id=id))
+    return render_template('blog/addcomment.html', post=id)
 
+@bp.route('/<int:id>/updatecomment', methods=('GET', 'POST'))
+@login_required
+def updatecomment(id):
+    comment_acquired = get_comment(id)
 
+    if request.method == 'POST':
+        body = request.form['comment_body']
+        error = None
+
+        if not body:
+            error = 'Comment is required.'
+
+        if error is not None:
+            flash(error)
+        else:
+            db = get_db()
+            db.execute(
+                'UPDATE comment SET comment_body = ?'
+                ' WHERE id = ?',
+                (body, id)
+            )
+            db.commit()
+            return redirect(url_for('blog.comment', id=comment_acquired['post_id']))
+
+    return render_template('blog/updatecomment.html', comment=comment_acquired)
+
+@bp.route('/<int:id>/deletecomment', methods=('POST',))
+@login_required
+def deletecomment(id):
+    comment_acquired = get_comment(id)
+    db = get_db()
+    db.execute('DELETE FROM comment WHERE id = ?', (id,))
+    db.commit()
+    return redirect(url_for('blog.comment', id=comment_acquired['post_id']))
+
+@bp.route('/search', methods=['POST'])
+def search():
+
+    if request.method == 'POST':
+        query = request.form['search_content']
+        error = None
+
+        if not query:
+            error = 'You have not entered a relevant search.'
+
+        if error is not None:
+            flash(error)
+
+        else:
+            db = get_db()
+            posts = db.execute('SELECT p.id, title, post_body, post_created, post_author_id, username'
+                ' FROM post p JOIN user u ON p.post_author_id = u.id'
+                ' WHERE (title LIKE ? OR post_body LIKE ? OR username LIKE ?)'
+                ' ORDER BY post_created DESC',
+                ('%' + query + '%', '%' + query + '%', '%' + query + '%')
+            ).fetchall()
+            return render_template('blog/search.html', posts=posts)
+    return index()

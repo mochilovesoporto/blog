@@ -10,18 +10,18 @@ CREATE TABLE user (
 
 CREATE TABLE post (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    author_id INTEGER NOT NULL,
-    created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    post_author_id INTEGER NOT NULL,
+    post_created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     title TEXT NOT NULL,
-    body TEXT NOT NULL,
-    FOREIGN KEY (author_id) REFERENCES user (id)
+    post_body TEXT NOT NULL,
+    FOREIGN KEY (post_author_id) REFERENCES user (id)
 );
 
 CREATE TABLE comment (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    author_id INTEGER NOT NULL,
+    comment_author_id INTEGER NOT NULL,
     post_id INTEGER NOT NULL,
-    created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    body TEXT NOT NULL,
-    FOREIGN KEY (author_id) REFERENCES user (id)
+    comment_created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    comment_body TEXT NOT NULL,
+    FOREIGN KEY (comment_author_id) REFERENCES user (id)
 );

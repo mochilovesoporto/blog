@@ -1,23 +1,78 @@
 html { font-family: Helvetica, sans-serif; background: #1F2933; padding: 1rem; }
 body { max-width: 960px; margin: 0 auto; background: #3E4C59; border-radius: 5px; }
 h1 { font-family: Helvetica, sans-serif; color: #E4E7EB; margin: 1rem 0; }
+
 a { background-color: #404040;
   border: none;
   color: #E4E7EB;
-  padding: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 5px;
+  padding-top: 5px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
   font-size: 14px;
-  margin: 4px 2px;
+  margin: 4px 4px;
   cursor: pointer;
-   border-radius: 10px}
+  border-radius: 14px;
+  max-width: 12em;
+  }
+a:hover {
+  background-color: #857f7f;
+  color: white;
+}
+
 hr { border: none; border-top: 1px solid #E4E7EB; }
 nav { background: #616E7C; display: flex; align-items: center; padding: 0 0.5rem; border-radius: 5px;}
 nav h1 { font-size: 2em; flex: auto; margin: 0; color: #E4E7EB; }
-nav h1 a { text-decoration: none; padding: 0.25rem 0.5rem; }
+nav h1 a { text-decoration: none; padding: 0.25rem 0.5rem; background-color: #616E7C; font-size: 40px;}
+nav h1 a:hover { background-color: #616E7C;}
 nav ul  { display: flex; list-style: none; margin: 0; padding: 0; color: #E4E7EB; }
 nav ul li a, nav ul li span, header .action { display: block; padding: 0.5rem; }
+nav ul li span { margin-top: 8px;}
+nav ul li a {
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 5px;
+  padding-top: 5px;
+  margin-top: 12px;
+}
+
+nav ul li form {
+  background-color: #dee1e3;
+  display:flex;
+  flex-direction:row;
+  border:1px solid grey;
+  text-align: left;
+  border-radius: 18px;
+  float: right;
+  padding: 6px;
+  margin-top: 8px;
+  margin-right: 16px;
+  margin-bottom: 8px;
+}
+
+nav ul li form:hover {
+  box-shadow: 0 0 0 2px #87c8e0;
+   }
+nav ul li form input[type="text"] {
+  border: none;
+  font-size: 17px;
+  background-color: #dee1e3;
+  }
+
+nav ul li form input:focus {
+  outline: none;
+}
+
+button {
+  background:#dee1e3;
+  border-radius: 25px;
+  color: #808080;
+  border:2px solid #808080;
+}
+
 .content { padding: 0 1rem 1rem; }
 .content > header { border-bottom: 1px solid lightgray; display: flex; align-items: flex-end; }
 .content > header h1 { flex: auto; margin: 1rem 0 0.25rem 0; }
@@ -27,6 +82,41 @@ nav ul li a, nav ul li span, header .action { display: block; padding: 0.5rem; }
 .post > header h1 { font-size: 1.5em; margin-bottom: 0; }
 .post .about { color: #E4E7EB; font-style: italic; }
 .post .body { color: #F5F7FA; white-space: pre-line; }
+
+.new .action {
+  border: none;
+  color: #E4E7EB;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 5px;
+  padding-top: 5px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  margin: 4px 4px;
+  cursor: pointer;
+  border-radius: 14px;
+  max-width: 12em;
+}
+
+.post .edit .action {
+  border: none;
+  color: #E4E7EB;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 5px;
+  padding-top: 5px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  margin: 4px 4px;
+  cursor: pointer;
+  border-radius: 14px;
+  max-width: 12em;
+}
+
 .content:last-child { margin-bottom: 0; }
 .content form { margin: 1em 0; display: flex; flex-direction: column; color: #E4E7EB; }
 .content label { font-weight: bold; margin-bottom: 0.5em; }
