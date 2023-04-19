@@ -1,5 +1,5 @@
-html { font-family: Helvetica, sans-serif; background: #1F2933; padding: 1rem; }
-body { max-width: 960px; margin: 0 auto; background: #3E4C59; border-radius: 5px; }
+html { font-family: Helvetica, sans-serif; background: #1F2933; }
+body {  margin: 0; background: #1F2933; border-radius: 1px;}
 h1 { font-family: Helvetica, sans-serif; color: #E4E7EB; margin: 1rem 0; }
 
 a { background-color: #404040;
@@ -23,7 +23,6 @@ a:hover {
   color: white;
 }
 
-hr { border: none; border-top: 1px solid #E4E7EB; }
 nav { background: #616E7C; display: flex; align-items: center; padding: 0 0.5rem; border-radius: 5px;}
 nav h1 { font-size: 2em; flex: auto; margin: 0; color: #E4E7EB; }
 nav h1 a { text-decoration: none; padding: 0.25rem 0.5rem; background-color: #616E7C; font-size: 40px;}
@@ -40,6 +39,7 @@ nav ul li a {
 }
 
 nav ul li form {
+  margin-right: auto;
   background-color: #dee1e3;
   display:flex;
   flex-direction:row;
@@ -73,15 +73,50 @@ button {
   border:2px solid #808080;
 }
 
+img {
+  border-radius: 50%;
+  width: 25px;
+  height: auto;
+  margin-right: 10px;
+}
+
 .content { padding: 0 1rem 1rem; }
-.content > header { border-bottom: 1px solid lightgray; display: flex; align-items: flex-end; }
+.content > header { display: flex; align-items: flex-end; padding-bottom: 10px;}
 .content > header h1 { flex: auto; margin: 1rem 0 0.25rem 0; }
 .flash { margin: 1em 0; padding: 1em; background: #cae6f6; border: 1px solid #377ba8; }
 .post > header { display: flex; align-items: flex-end; font-size: 0.85em; }
 .post > header > div:first-of-type { flex: auto; }
 .post > header h1 { font-size: 1.5em; margin-bottom: 0; }
-.post .about { color: #E4E7EB; font-style: italic; }
+.post .about { color: #E4E7EB; font-style: italic;  display: flex; align-items: center; margin-top:10px;}
 .post .body { color: #F5F7FA; white-space: pre-line; }
+
+.container {
+  display: flex;
+  justify-content: center;
+}
+
+.post-column {
+  max-width: 650px;
+  width: 70%;
+
+  padding-left: 10px;
+  padding-right: 20px;
+  padding-bottom: 5px;
+  padding-top: 5px;
+  margin-left: 20px;
+  }
+
+.post-container {
+  background: #383838;
+  padding: 10px;
+  margin-bottom: 18px;
+  border-radius: 6px;
+}
+
+.new-column {
+  width: 30%;
+  padding-left: 30px;
+}
 
 .new .action {
   border: none;
@@ -123,4 +158,3 @@ button {
 .content input, .content textarea { margin-bottom: 1em; background: #404040; color: #E4E7EB;  }
 .content textarea { min-height: 12em; resize: vertical; }
 input[type=submit] { align-self: start; min-width: 10em; border-radius: 8px; background-color: #404040;}
-
