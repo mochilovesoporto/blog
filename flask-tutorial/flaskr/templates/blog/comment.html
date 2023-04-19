@@ -6,21 +6,21 @@
 
 {% block content %}
   {% for comment in comments %}
-    <article class="post">
+    <article class="comment">
       <header>
         <div>
           <div class="about">by {{ comment['username'] }} on {{ comment['comment_created'].strftime('%Y-%m-%d') }}</div>
         </div>
-         {% if g.user['id'] == comment['comment_author_id'] %}
-          <a class="action" href="{{ url_for('blog.updatecomment', id=comment['id']) }}">Edit</a>
-        {% endif %}
       </header>
       <p class="body">{{ comment['comment_body'] }}</p>
+      {% if g.user['id'] == comment['comment_author_id'] %}
+          <div class="edit"><a class="action" href="{{ url_for('blog.updatecomment', id=comment['id']) }}">Edit</a></div>
+        {% endif %}
     </article>
-    {% if not loop.last %}
-      <hr>
-    {% endif %}
   {% endfor %}
-<a class="action" href="{{ url_for('blog.addcomment', id=post) }}">Add Comment</a>
-<a class="action" href="{{ url_for('blog.index') }}">Back</a>
+  <div
+          class="comment"><a class="action" href="{{ url_for('blog.addcomment', id=post) }}">Add Comment</a>
+       <a class="action" href="{{ url_for('blog.index') }}">Back</a>
+  </div>
+</div>
 {% endblock %}

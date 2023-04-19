@@ -2,33 +2,52 @@
 
 {% block nav %}
 <li><form action="{{ url_for('blog.search') }}" method='post'>
-            <input type="text" name="search_content" onkeydown="if(event.keycode == 12) { this.form.submit(); return false; }" placeholder="Search Tumblr">
+            <input type="text" name="search_content" onkeydown="if(event.keycode == 12) { this.form.submit(); return false; }" placeholder="Search Reddit">
             <button type="button" onclick="window.location.href = '{{ url_for('blog.index') }}';">x</button>
     </form>
 </li>
 {% endblock %}
 
 {% block header %}
-  <h1>{% block title %}Posts{% endblock %}</h1>
+  <h1>{% block title %}Search Results{% endblock %}</h1>
 {% endblock %}
 
 {% block content %}
-  {% for post in posts %}
-    <article class="post">
-      <header>
-        <div>
-          <h1>{{ post['title'] }}</h1>
-          <div class="about">by {{ post['username'] }} on {{ post['post_created'].strftime('%Y-%m-%d') }}</div>
+  <div class="container">
+    <div class="post-column">
+      {% for post in posts %}
+        <div class="post-container">
+          <article class="post">
+            <header>
+              <div>
+                <h1>{{ post['title'] }}</h1>
+                <div class="about"> <img src="{{ url_for('static', filename='images/mochi.jpg') }}" class="image"/>by {{ post['username'] }} on {{ post['post_created'].strftime('%Y-%m-%d') }}</div>
+              </div>
+              {% if g.user['id'] == post['post_author_id'] %}
+                <div class="edit"><a class="action" href="{{ url_for('blog.update', id=post['id']) }}">Edit</a></div>
+              {% endif %}
+            </header>
+            <p class="body">{{ post['post_body'] }}</p>
+            <a class="action" href="{{ url_for('blog.comment', id=post['id']) }}">Comments</a>
+          </article>
         </div>
-        {% if g.user['id'] == post['post_author_id'] %}
-          <a class="action" href="{{ url_for('blog.update', id=post['id']) }}">Edit</a>
-        {% endif %}
-      </header>
-      <p class="body">{{ post['post_body'] }}</p>
-      <a class="action" href="{{ url_for('blog.comment', id=post['id']) }}">Comments</a>
-    </article>
-    {% if not loop.last %}
-      <hr>
-    {% endif %}
-  {% endfor %}
+      {% endfor %}
+    </div>
+
+   <div class="post-container-new-column">
+    <div class="item-container">
+      <h1>Item 1</h1>
+      <p>This is the content of item 1.</p>
+    </div>
+    <div class="item-container">
+      <h1>Item 2</h1>
+      <p>This is the content of item 2.</p>
+    </div>
+    <div class="item-container">
+      <h1>Item 3</h1>
+      <p>This is the content of item 3.</p>
+    </div>
+  </div>
+</div>
+
 {% endblock %}

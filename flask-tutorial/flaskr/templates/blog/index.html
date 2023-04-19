@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block header %}
-  <h1>{% block title %}Tumblr{% endblock %}</h1>
+  <h1>{% block title %}Home{% endblock %}</h1>
   {% if g.user %}
     <div class="new"><a class="action" href="{{ url_for('blog.create') }}">New</a></div>
   {% endif %}
@@ -18,19 +18,33 @@
                 <h1>{{ post['title'] }}</h1>
                 <div class="about"> <img src="{{ url_for('static', filename='images/mochi.jpg') }}" class="image"/>by {{ post['username'] }} on {{ post['post_created'].strftime('%Y-%m-%d') }}</div>
               </div>
+            </header>
+            <p class="body">{{ post['post_body'] }}</p>
+            <div class="button-container">
+                <div class="comment"><a class="action" href="{{ url_for('blog.comment', id=post['id']) }}">Comments</a></div>
               {% if g.user['id'] == post['post_author_id'] %}
                 <div class="edit"><a class="action" href="{{ url_for('blog.update', id=post['id']) }}">Edit</a></div>
               {% endif %}
-            </header>
-            <p class="body">{{ post['post_body'] }}</p>
-            <a class="action" href="{{ url_for('blog.comment', id=post['id']) }}">Comments</a>
+            </div>
           </article>
         </div>
       {% endfor %}
     </div>
 
-    <div class="new-column">
-      <h1>Hello, I am a sidebar.</h1>
+   <div class="post-container-new-column">
+    <div class="item-container">
+      <h1>Item 1</h1>
+      <p>This is the content of item 1.</p>
+    </div>
+    <div class="item-container">
+      <h1>Item 2</h1>
+      <p>This is the content of item 2.</p>
+    </div>
+    <div class="item-container">
+      <h1>Item 3</h1>
+      <p>This is the content of item 3.</p>
     </div>
   </div>
+</div>
+
 {% endblock %}
