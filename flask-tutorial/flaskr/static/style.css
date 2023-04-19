@@ -2,9 +2,9 @@ html { font-family: Helvetica, sans-serif;}
 body {  margin: 0; background: #000000; border-radius: 1px;}
 h1 { font-family: Helvetica, sans-serif; color: #D7DADC; margin: 1rem 0; }
 
-a { background-color: #404040;
+a { background-color: #D7DADC;
   border: none;
-  color: #D7DADC;
+  color: rgb(28,28,28);
   padding-left: 10px;
   padding-right: 10px;
   padding-bottom: 5px;
@@ -17,6 +17,7 @@ a { background-color: #404040;
   cursor: pointer;
   border-radius: 14px;
   max-width: 12em;
+  font-style: bold;
   }
 a:hover {
   background-color: #857f7f;
@@ -26,7 +27,7 @@ a:hover {
 nav { border-bottom:1px solid #484848; background: rgb(28,28,28); display: flex; align-items: center; max-height: 48px; }
 nav h1 { font-size: 2em; flex: auto; margin: 0; color: #D7DADC; }
 nav h1 a { text-decoration: none; padding: 0.25rem 0.5rem; background-color: rgb(28,28,28); font-size: 40px; border-radius: 0; margin: 0; padding: 0;}
-nav h1 a img {border-radius:0; width: 70px; height: auto; margin: 0; padding: 0; padding-left: 10px;}
+nav h1 a img {border-radius:0; width: 95px; height: auto; margin: 0; padding: 0; padding-left: 10px;}
 nav h1 a:hover { background-color: rgb(28,28,28); margin: 0; padding: 0;}
 nav ul  { display: flex; list-style: none; margin: 0; padding: 0; color: #D7DADC; }
 nav ul li a, nav ul li span, header .action { display: block; padding: 0.5rem; }
@@ -49,18 +50,21 @@ nav ul li form {
   border-radius: 18px;
   float: right;
   padding: 6px;
-  margin-top: 8px;
+  margin-top: 2px;
   margin-right: 16px;
-  margin-bottom: 8px;
+  height: 25px;
+  width: 500px;
 }
 
 nav ul li form:hover {
-  box-shadow: 0 0 0 2px #87c8e0;
+  box-shadow: 0 0 0 2px #ff4500;
    }
 nav ul li form input[type="text"] {
   border: none;
   font-size: 17px;
   background-color: #383838;
+  width:100%;
+  border-radius: 18px;
   }
 
 nav ul li form input:focus {
@@ -72,11 +76,12 @@ button {
   border-radius: 25px;
   color: #808080;
   border:2px solid #808080;
+  margin-left:auto;
 }
 
 img {
   border-radius: 50%;
-  width: 25px;
+  width: 23px;
   height: auto;
   margin-right: 10px;
 }
@@ -104,7 +109,7 @@ img {
 .post > header { display: flex; align-items: flex-end; font-size: 0.85em; }
 .post > header > div:first-of-type { flex: auto; }
 .post > header h1 { font-size: 1.5em; margin-bottom: 0; }
-.post .about, .comment .about { color: #D7DADC; font-style: italic;  display: flex; align-items: center; margin-top:10px;}
+.post .about, .comment .about { color: #D7DADC; font-style: italic;  display: flex; align-items: center; margin-top:10px;font-size: 12px;}
 .post .body, .comment .body { color: #D7DADC; white-space: pre-line; }
 
 .comment {
@@ -125,7 +130,7 @@ img {
 }
 
 .post-column {
-  max-width: 580px;
+  max-width: 630px;
   width: 70%;
   padding-left: 10px;
   padding-right: 20px;
@@ -137,7 +142,7 @@ img {
 .post-container {
   background: rgb(28,28,28);
   padding: 10px;
-  margin-bottom: 18px;
+  margin-bottom: 10px;
   border-radius: 6px;
   border: 1px solid #484848;
 }
@@ -153,9 +158,9 @@ img {
   border: 1px solid #484848;
   background: rgb(28,28,28);
   padding: 10px;
-  margin-bottom: 18px;
+  margin-bottom: 10px;
   margin-top: 5px;
-  width: 250px;
+  width: 280px;
 }
 
 .post-container-new-column h1 {color: #ff4500;}
@@ -163,7 +168,7 @@ img {
 
 .new .action {
   border: none;
-  color: #D7DADC;
+  color: rgb(28,28,28);
   padding-left: 10px;
   padding-right: 10px;
   padding-bottom: 5px;
@@ -191,7 +196,7 @@ img {
 
 .post .edit .action, .comment .edit .action {
   border: none;
-  color: #D7DADC;
+  color: rgb(28,28,28);
   padding-left: 10px;
   padding-right: 10px;
   padding-bottom: 5px;

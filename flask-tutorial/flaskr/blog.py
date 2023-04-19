@@ -9,7 +9,7 @@ bp = Blueprint('blog',__name__)
 @bp.route('/')
 def index():
     db = get_db()
-    posts = db.execute('SELECT p.id, title, post_body, post_created, post_author_id, username'
+    posts = db.execute('SELECT p.id, title, post_body, value, post_created, post_author_id, username'
         ' FROM post p JOIN user u ON p.post_author_id = u.id'
         ' ORDER BY post_created DESC'
     ).fetchall()
@@ -139,6 +139,10 @@ def addcomment(id):
                 'INSERT INTO comment (comment_body, comment_author_id, post_id)'
                 ' VALUES (?, ?, ?)',
                 (body, user_id, id)
+            )
+            db.execute(
+                'UPDATE post SET value = value + 1 WHERE id = ?',
+                (id,)
             )
             db.commit()
             return redirect(url_for('blog.comment', id=id))
