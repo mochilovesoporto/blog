@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}
+
+{% endblock %}
+
+{% block link %}
+rel="stylesheet" href="{{ url_for('static',filename='index.css') }}"
+{% endblock %}
+
+{% block body %}
+<section>
+    <h1> Welcome to GG!</h1>
+    <nav>
+    <a class="action" href="{{ url_for('auth.login') }}">Log in</a>
+    <a class="action" href="{{ url_for('auth.register') }}">Register</a>
+    </nav>
+</section>
+{% endblock %}
